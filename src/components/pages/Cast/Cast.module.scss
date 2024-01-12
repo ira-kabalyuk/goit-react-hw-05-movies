@@ -1,0 +1,12 @@
+.cast {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 16px;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}

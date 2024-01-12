@@ -1,0 +1,46 @@
+.form {
+  margin-bottom: 24px;
+  position: relative;
+  height: 32px;
+  width: 220px;
+  display: flex;
+  align-items: center;
+}
+
+.button {
+  border-radius: 3px 0 0 3px;
+  background-color: #fff;
+  border: none;
+  height: 100%;
+  background-color: rgb(232, 240, 254);
+}
+
+.input {
+  background-color: rgb(232, 240, 254);
+  border-radius: 0 3px 3px 0;
+  border: none;
+  height: 100%;
+  padding: 0 16px 0 4px;
+
+  &:focus {
+    outline: none;
+    background-color: rgb(232, 240, 254);    
+  }
+}
+
+.list {
+
+  .link {
+    color: #000;
+    text-decoration: none;
+
+    &:hover {
+      color: #4004FD
+    }
+  }
+}
+
+.item {
+  margin-bottom: 8px;
+  font-size: 16px;
+}
