@@ -1,23 +1,27 @@
-import React from 'react';
+import React, {Suspense, lazy} from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Home } from './pages/Home';
-import { Movies } from './pages/Movies';
-import { MovieDetails } from './pages/MovieDetails';
 
 import { Error } from './Error';
 import { Header } from './Header';
+import { Loader } from './Loader';
+
+const Home = lazy(() => import('./pages/Home/Home'));
+const Movies = lazy(() => import('./pages/Movies/Movies'));
+const MovieDetails = lazy(() => import('./pages/MovieDetails/MovieDetails'));
 
 
 export const App = () => {
   return (
     <>
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/movies" element={<Movies />}></Route>
-        <Route path="/movies/:id/*" element={<MovieDetails />} />
-        <Route path="*" element={<Error>404. Page not found</Error>} />
-      </Routes>
+      <Suspense fallback = {<Loader />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/movies" element={<Movies />}></Route>
+          <Route path="/movies/:id/*" element={<MovieDetails />} />
+          <Route path="*" element={<Error>404. Page not found</Error>} />
+        </Routes>
+      </Suspense>
     </>
   );
 };

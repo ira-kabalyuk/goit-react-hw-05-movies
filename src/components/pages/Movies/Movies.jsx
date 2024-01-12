@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react";
-import { NavLink, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useLocation } from 'react-router-dom';
 
-import { requestMovies } from '../../../services/api';
-import { STATUSES } from '../../../utils/constants';
+import { requestMovies } from 'services/api';
+import { STATUSES } from 'utils/constants';
 
 import { Section } from 'components/Section';
 import { Error } from 'components/Error';
@@ -10,22 +10,25 @@ import { Loader } from 'components/Loader';
 import styles from './Movies.module.scss';
 
 
-const Movies = () => {  
+const Movies = () => {
+  const location = useLocation();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('query');
   
   const [movies, setMovies] = useState(null);
   const [status, setStatus] = useState(STATUSES.idle);
-  const [error, setError] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [error, setError] = useState(null); 
 
   const showMovies = status === STATUSES.success;
   const showError = status === STATUSES.error;
   const showLoader = status === STATUSES.pending;
   const emptyMovies = showMovies && movies?.length === 0;
 
-  const fetchMoviesByQuery = async (searchTerm) => {
+  const fetchMoviesByQuery = async (query) => {
     try {
       setStatus(STATUSES.pending)
-      const newMovies = await requestMovies(searchTerm);
+      const newMovies = await requestMovies(query);
        console.log(newMovies, 'movies');
       setMovies(newMovies.results)
       setStatus(STATUSES.success); 
@@ -36,19 +39,18 @@ const Movies = () => {
   }
 
   useEffect(() => {
-    if (!searchTerm) {
+    if (query === null) {
       return;
     }
-    fetchMoviesByQuery(searchTerm);
-  }, [searchTerm]);
+    fetchMoviesByQuery(query);
+  }, [query]);
 
     const handleSubmit = (event) => {
       event.preventDefault();
       const searchValue = event.currentTarget.elements.search.value;
-      setSearchTerm(searchValue);
+      setSearchParams({ query: searchValue }); 
       setMovies([]);
   };
-
 
   return (
     <Section>
@@ -62,6 +64,7 @@ const Movies = () => {
               placeholder="Search movies"
               name="search"
               className={styles.input}
+              defaultValue={query}
             />
         </form>
         {showError && <Error>Oops, some error occurred... {error}</Error>}
@@ -71,7 +74,7 @@ const Movies = () => {
           <ul className={styles.list}>
             {movies?.map((movie, index) =>
               <li key={index} className={styles.item}>
-                <NavLink to={`/movies/${movie.id}`} className={styles.link}>{movie.title}</NavLink>
+                <Link state={{from: location}} to={`/movies/${movie.id}`} className={styles.link}>{movie.title}</Link>
               </li>
             )}
           </ul>
