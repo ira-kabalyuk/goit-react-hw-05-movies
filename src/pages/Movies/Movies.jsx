@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Link, useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 
 import { requestMovies } from 'services/api';
 import { STATUSES } from 'utils/constants';
@@ -7,7 +7,8 @@ import { STATUSES } from 'utils/constants';
 import { Section } from 'components/Section';
 import { Error } from 'components/Error';
 import { Loader } from 'components/Loader';
-import styles from './Movies.module.scss';
+import { MoviesList } from 'components/MoviesList';
+import { SearchForm } from 'components/SearchForm';
 
 
 const Movies = () => {
@@ -28,8 +29,7 @@ const Movies = () => {
   const fetchMoviesByQuery = async (query) => {
     try {
       setStatus(STATUSES.pending)
-      const newMovies = await requestMovies(query);
-       console.log(newMovies, 'movies');
+      const newMovies = await requestMovies(query);   
       setMovies(newMovies.results)
       setStatus(STATUSES.success); 
     } catch (error) {
@@ -54,32 +54,15 @@ const Movies = () => {
 
   return (
     <Section>
-      <div className={styles.movies}>
-         <form className={styles.form} onSubmit={handleSubmit} action="">
-            <button className={styles.button} type="submit">&#128269;</button>
-            <input
-              type="text"
-              autoComplete="off"
-              autoFocus
-              placeholder="Search movies"
-              name="search"
-              className={styles.input}
-              defaultValue={query}
-            />
-        </form>
+      <>
+        <SearchForm handleSubmit={handleSubmit} query={query}></SearchForm>
         {showError && <Error>Oops, some error occurred... {error}</Error>}
         {emptyMovies && <Error>Sorry, no movies found &#129335;</Error>}
         {showLoader && <Loader />}
         {showMovies && movies && (
-          <ul className={styles.list}>
-            {movies?.map((movie, index) =>
-              <li key={index} className={styles.item}>
-                <Link state={{from: location}} to={`/movies/${movie.id}`} className={styles.link}>{movie.title}</Link>
-              </li>
-            )}
-          </ul>
+          <MoviesList list={movies} state={{from: location}}></MoviesList>
         )}
-      </div>
+      </>
     </Section>
   );
 };

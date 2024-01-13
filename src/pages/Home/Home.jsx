@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
-import { requestTrending } from '../../../services/api';
+import { requestTrending } from 'services/api';
 
-import { STATUSES } from '../../../utils/constants';
+import { STATUSES } from 'utils/constants';
 
-import styles from './Home.module.scss';
+import {MoviesList} from 'components/MoviesList'
 import { Section } from 'components/Section';
 import { Error } from 'components/Error';
 import { Loader } from 'components/Loader';
+
+import styles from './Home.module.scss';
 
 
 const Home = () => {
@@ -22,7 +23,7 @@ const Home = () => {
   const fetchTrendingByQuery = async () => {
     try {
       setStatus(STATUSES.pending)
-      const newMovies = await requestTrending();       
+      const newMovies = await requestTrending();
       setTrending(newMovies.results)
       setStatus(STATUSES.success); 
     } catch (error) {
@@ -43,13 +44,7 @@ const Home = () => {
       {showTrending && trending && (
         <>
         <h1 className={styles.title}>Trending today</h1>
-          <ul className={styles.list}>
-            {trending?.map((item, index) => 
-              <li key={index} className={styles.item}>
-                <Link to={`/movies/${item.id}`} className={styles.link}>{item.title}</Link>
-              </li>
-            )}
-          </ul>
+          <MoviesList list={trending}></MoviesList>
         </>
       )}
     </Section>

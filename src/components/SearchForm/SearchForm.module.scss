@@ -24,23 +24,6 @@
 
   &:focus {
     outline: none;
-    background-color: rgb(232, 240, 254);    
+    background-color: rgb(232, 240, 254);
   }
-}
-
-.list {
-
-  .link {
-    color: #000;
-    text-decoration: none;
-
-    &:hover {
-      color: #4004FD
-    }
-  }
-}
-
-.item {
-  margin-bottom: 8px;
-  font-size: 16px;
 }

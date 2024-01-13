@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from "react";
 import { useParams } from 'react-router-dom';
 
-import { requestCasts } from '../../../services/api';
+import { requestCasts } from 'services/api';
 
-import { STATUSES } from '../../../utils/constants';
-import {CONSTANTS} from '../../../utils/constants';
+import { STATUSES } from 'utils/constants';
+import {CONSTANTS} from 'utils/constants';
 
 import { Error } from 'components/Error';
 import { Loader } from 'components/Loader';

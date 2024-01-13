@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from "react";
 import {useParams} from 'react-router-dom';
 
-import { requestReviews } from '../../../services/api';
-
-import { STATUSES } from '../../../utils/constants';
+import { requestReviews } from 'services/api';
+import { STATUSES } from 'utils/constants';
 
 import { Message } from 'components/Message';
 import { Error } from 'components/Error';

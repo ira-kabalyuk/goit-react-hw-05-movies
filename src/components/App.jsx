@@ -5,9 +5,9 @@ import { Error } from './Error';
 import { Header } from './Header';
 import { Loader } from './Loader';
 
-const Home = lazy(() => import('./pages/Home/Home'));
-const Movies = lazy(() => import('./pages/Movies/Movies'));
-const MovieDetails = lazy(() => import('./pages/MovieDetails/MovieDetails'));
+const Home = lazy(() => import('pages/Home/Home'));
+const Movies = lazy(() => import('pages/Movies/Movies'));
+const MovieDetails = lazy(() => import('pages/MovieDetails/MovieDetails'));
 
 
 export const App = () => {

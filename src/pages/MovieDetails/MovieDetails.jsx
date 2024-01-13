@@ -12,14 +12,13 @@ import { Loader } from 'components/Loader';
 
 import styles from './MovieDetails.module.scss';
 
-const Cast = lazy(() => import('../Cast/Cast'));
-const Reviews = lazy(() => import('../Reviews/Reviews'));
+const Cast = lazy(() => import('pages/Cast/Cast'));
+const Reviews = lazy(() => import('pages/Reviews/Reviews'));
 
 const MovieDetails = () => {
   const location = useLocation();
   const backLinkRef = useRef(location.state?.from ?? '/');
 
-  console.log(location, 'location');
   const param = useParams();
   const paramValue = param.id;
   const [details, setDetails] = useState(null);
@@ -71,10 +70,14 @@ const MovieDetails = () => {
             <h1 className={styles.title}>{details.title} <span className={styles.fontNormal}>({year})</span></h1>
             <p className={styles.text}>User score: <span className={styles.fontNormal}>{roundedNumber}% </span></p>
             <p className={styles.text}>Overview: <span className={styles.fontNormal}>{details?.overview}</span></p>
-            <span className={styles.text}>Genres:</span>
-            {details.genres.map((genre, index) => (
-              <span key={index} className={styles.genre}>{genre.name}</span>
-            ))}
+            {details.genres.length > 0 && (
+              <>
+                <span className={styles.text}>Genres:</span>
+                {details.genres.map((genre, index) => (
+                  <span key={index} className={styles.genre}>{genre.name}</span>
+                ))}
+              </>
+            )}
           </div>
           </div>
           <ul className={styles.list}>
