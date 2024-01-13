@@ -29,7 +29,7 @@ const Movies = () => {
   const fetchMoviesByQuery = async (query) => {
     try {
       setStatus(STATUSES.pending)
-      const newMovies = await requestMovies(query);   
+      const newMovies = await requestMovies(query);
       setMovies(newMovies.results)
       setStatus(STATUSES.success); 
     } catch (error) {
@@ -54,15 +54,13 @@ const Movies = () => {
 
   return (
     <Section>
-      <>
-        <SearchForm handleSubmit={handleSubmit} query={query}></SearchForm>
-        {showError && <Error>Oops, some error occurred... {error}</Error>}
-        {emptyMovies && <Error>Sorry, no movies found &#129335;</Error>}
-        {showLoader && <Loader />}
-        {showMovies && movies && (
-          <MoviesList list={movies} state={{from: location}}></MoviesList>
-        )}
-      </>
+      <SearchForm handleSubmit={handleSubmit} query={query}></SearchForm>
+      {showError && <Error>Oops, some error occurred... {error}</Error>}
+      {emptyMovies && <Error>Sorry, no movies found &#129335;</Error>}
+      {showLoader && <Loader />}
+      {showMovies && movies && (
+        <MoviesList list={movies} state={{from: location}}></MoviesList>
+      )}
     </Section>
   );
 };
